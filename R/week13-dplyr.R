@@ -65,6 +65,61 @@ week13_tbl |>
 
 # Analysis 
 
-## Managers 
+## 1: Managers 
 week13_tbl |>
-  filter(manager_hire == "Y")
+  count()
+
+### Output: 549
+#### NOTE: I originally filtered for those who were hired as managers, but after thinking about it, it seems that this entire data set is of managers, thus, every row is a manager. 
+
+
+## 2: Unique Managers 
+week13_tbl |>
+  distinct(employee_id) |> # Distinct is a function that deletes duplicate rows, in this case based on employee ID
+  count()
+
+### Output: 549, seems that there weren't duplicatesn 
+
+## 3. Managers not originally hired as such, grouped by location 
+week13_tbl |>
+  filter(manager_hire == "N") |> # Filtering on those who were not hired as managers
+  group_by(city) |> # Groups by location, in this case city 
+  count() # Gives counts 
+
+### Output: 
+# Groups:   city [6]
+# city              n
+# <chr>         <int>
+#   1 Chicago          61
+# 2 Houston          20
+# 3 New York        183
+# 4 Orlando          20
+# 5 San Francisco    48
+# 6 Toronto         189
+
+## 4. mean and sd of number of years split by performance level 
+week13_tbl |>
+  mutate(
+    factor(
+      performance_group, 
+      levels = c("Bottom", "Middle", "Top")
+      ) # Turns this variable into a factor to group the further analysis 
+  ) |>
+  group_by(performance_group) |> # actually groups everything 
+  summarize(
+    mean_years = mean(yrs_employed), # mean call to get the average years
+    sd_years = sd(yrs_employed) # sd call for standard deviation 
+  ) # Summarize here to output a nice tibble with these variables defined 
+  
+### Output: 
+# A tibble: 3 × 3
+# performance_group mean_years sd_years
+# <chr>                  <dbl>    <dbl>
+# 1 Bottom                  4.74    0.537
+# 2 Middle                  4.58    0.509
+# 3 Top                     4.33    0.604
+
+
+
+
+  
