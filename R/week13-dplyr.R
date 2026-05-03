@@ -19,4 +19,25 @@ sql_connect <- DBI::dbConnect(
   password = NEON_PW, # defined above 
   sslmode = "require" # Requires SSL 
 )
-  
+
+## Found correct tables from "dbListTables()
+# [1] "datascience_employees"  "datascience_offices"   
+# [3] "datascience_testscores" "participant_scores" 
+
+## employees
+employees_tbl <- tbl(sql_connect, "datascience_employees") |> 
+  collect() # Collect in order to make it a tibble for csv output 
+
+### writing "employees" csv into data folder 
+employees_tbl |>
+  write_csv("data/employees.csv")
+
+## Test scores 
+testscores_tbl <- tbl(sql_connect, "datascience_testscores") |>
+  collect() # explained above 
+
+### writing csv into data
+testscores_tbl |>
+  write_csv("data/testscores.csv")
+
+
