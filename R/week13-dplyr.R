@@ -119,7 +119,14 @@ week13_tbl |>
 # 2 Middle                  4.58    0.509
 # 3 Top                     4.33    0.604
 
-
+## 5. Location classification of managers, Id, Test, alphabetical order by location type
+week13_tbl |>
+  select(
+    employee_id, 
+    office_type, 
+    test_score
+  ) |> # selects the relevant variables
+  arrange(office_type, desc(test_score))  # Arranges office type alphabetically (suburban on top), and tests in descending order by score. 
 
 
   
