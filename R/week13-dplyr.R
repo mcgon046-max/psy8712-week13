@@ -128,5 +128,21 @@ week13_tbl |>
   ) |> # selects the relevant variables
   arrange(office_type, desc(test_score))  # Arranges office type alphabetically (suburban on top), and tests in descending order by score. 
 
+### Output: 
+# A tibble: 549 × 3
+# employee_id office_type test_score
+# <chr>       <chr>            <int>
+#   1 c764744b    Suburban           485
+# 2 8205a876    Suburban           439
+# 3 1be5eccb    Suburban           402
+# 4 0f4d1cff    Suburban           386
+# 5 fff52bc6    Suburban           379
+# 6 1a150568    Suburban           364
+# 7 9404cda9    Suburban           364
+# 8 bb457a36    Suburban           364
+# 9 88bd2854    Suburban           356
+# 10 a12398aa    Suburban           356
+# # ℹ 539 more rows
+# # ℹ Use `print(n = ...)` to see more rows
 
   
