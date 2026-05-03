@@ -24,7 +24,7 @@ sql_connect <- DBI::dbConnect(
 # [1] "datascience_employees"  "datascience_offices"   
 # [3] "datascience_testscores" "participant_scores" 
 
-## employees
+## employees tibble creation 
 employees_tbl <- tbl(sql_connect, "datascience_employees") |> 
   collect() # Collect in order to make it a tibble for csv output 
 
@@ -36,8 +36,25 @@ employees_tbl |>
 testscores_tbl <- tbl(sql_connect, "datascience_testscores") |>
   collect() # explained above 
 
-### writing csv into data
+### writing "test scores" csv into data
 testscores_tbl |>
   write_csv("data/testscores.csv")
 
+## offices tibble download 
+offices_tbl <- tbl(sql_connect, "datascience_offices") |>
+  collect()
 
+### writing csv for "offices"
+offices_tbl |>
+  write_csv("data/offices.csv")
+
+## Week13_tbl creation using joins 
+week13_tbl <- employees_tbl |>
+  inner_join(
+    testscores_tbl,
+    by = "employee_id" # this is the shared row 
+    ) |> # Inner join in order to only retain rows where there is a match in both tables 
+  inner_join(
+    offices_tbl, 
+    
+  )
