@@ -48,7 +48,7 @@ offices_tbl <- tbl(sql_connect, "datascience_offices") |>
 offices_tbl |>
   write_csv("data/offices.csv")
 
-## Week13_tbl creation using joins 
+## Week13_tbl creation using inner joins 
 week13_tbl <- employees_tbl |>
   inner_join(
     testscores_tbl,
@@ -56,5 +56,11 @@ week13_tbl <- employees_tbl |>
     ) |> # Inner join in order to only retain rows where there is a match in both tables 
   inner_join(
     offices_tbl, 
-    
+    by = join_by(city == office) # the "city" column in the other tibbles are matches to the "office" column in the offces_tbl 
   )
+
+## Write csv for week13_tbl 
+week13_tbl |>
+  write_csv("data/week13.csv")
+
+# Analysis 
