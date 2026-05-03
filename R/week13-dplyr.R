@@ -64,3 +64,7 @@ week13_tbl |>
   write_csv("data/week13.csv")
 
 # Analysis 
+
+## Managers 
+week13_tbl |>
+  filter(manager_hire == "Y")
