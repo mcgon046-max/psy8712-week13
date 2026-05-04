@@ -64,3 +64,34 @@ dbGetQuery(sql_connect, "
 # 5       Chicago            61
 # 6      New York           183
 
+## 4. mean and sd of number of years split by performance level 
+
+dbGetQuery(sql_connect, "
+  SELECT e.performance_group, 
+         AVG(e.yrs_employed) AS mean_years, 
+         STDDEV(e.yrs_employed) AS sd_years
+  FROM datascience_employees e
+  INNER JOIN datascience_testscores t ON e.employee_id = t.employee_id
+  GROUP BY e.performance_group
+  ORDER BY CASE e.performance_group 
+             WHEN 'Bottom' THEN 1 
+             WHEN 'Middle' THEN 2 
+             WHEN 'Top' THEN 3 
+           END;
+") # AVG and STDDEV are the SQL built in functions for mean and stadard deviation, GROUPs BY the performance group and numerated, the ORDER BY CASE is used to sort the output by the Bottm, middle, and top in that order. 
+
+### Output:
+# performance_group mean_years  sd_years
+# 1            Bottom   4.742063 0.5370070
+# 2            Middle   4.580609 0.5089866
+# 3               Top   4.325806 0.6037955
+
+
+## 5. Location classification of managers, Id, Test, alphabetical order by location type
+dbGetQuery(sql_connect, "
+  SELECT o.office_type, e.employee_id, t.test_score
+  FROM datascience_employees e
+  INNER JOIN datascience_testscores t ON e.employee_id = t.employee_id
+  INNER JOIN datascience_offices o ON e.city = o.office
+  ORDER BY o.office_type ASC, t.test_score DESC;
+") # SELECTs the relevant columns FROM the right table, JOINS based on employee ID and city, ORDERs it all BY suburban (alphabetical) and sorts scores by Descending order. 
